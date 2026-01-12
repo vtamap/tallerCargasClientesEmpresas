@@ -1,0 +1,10 @@
+### Prueba de carga de archivo de nómina
+POST http://localhost:8080/api/clientes/cargar-archivo
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="archivo"; filename="carga_prueba.txt"
+Content-Type: text/plain
+
+< ./prueba_clientes.txt
+--WebAppBoundary--
