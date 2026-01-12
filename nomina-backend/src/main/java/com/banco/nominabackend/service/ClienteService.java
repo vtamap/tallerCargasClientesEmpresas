@@ -28,13 +28,23 @@ public class ClienteService {
             int numLinea = 0;
             while ((linea = reader.readLine()) != null) {
                 numLinea++;
-                if (linea.trim().isEmpty()) continue;
+                // DEBUG: Imprimir qué hay realmente en la línea
+                System.out.println("--- Leída Línea " + numLinea + " ---");
+                System.out.println("Contenido: [" + linea + "]");
+                System.out.println("Longitud: " + linea.length());
 
-                // Suponemos formato: TIPO|ID|FECHA|VALOR|EMAIL|CELULAR
-                String[] datos = linea.split("\\|");
+                if (linea.trim().isEmpty()) {
+                    System.out.println(">> Se detectó vacía, saltando...");
+                    continue;
+                }
+
+                // Usamos el límite -1 para que no borre los campos vacíos del final
+                String[] datos = linea.split("\\|", -1);
+
+                System.out.println("Columnas detectadas: " + datos.length); // DEBUG
 
                 if (datos.length < 6) {
-                    errores.add("Línea " + numLinea + ": Formato incompleto.");
+                    errores.add("Línea " + numLinea + ": Formato incompleto. (Columnas: " + datos.length + ")");
                     continue;
                 }
 
@@ -117,7 +127,7 @@ public class ClienteService {
             cliente.setFechaNacimiento("1983-17-15");
         } else {
             cliente.setNombres("Usuario");
-            cliente.setApellidos("Genérico");
+            cliente.setApellidos("Databook");
             cliente.setFechaNacimiento("1985-01-01");
         }
     }
